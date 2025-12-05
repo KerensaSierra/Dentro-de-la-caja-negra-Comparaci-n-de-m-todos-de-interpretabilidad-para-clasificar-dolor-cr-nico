@@ -62,6 +62,7 @@ En la sección de archivos de GitHub, se encuentran los siguientes siete código
 2. **Respond-CAM.ipynb:** Aplicación del método de interpretabilidad Respond-CAM sobre el escenario comparativo de male vs female en la sesión 3.
 3. **GradCAM.ipynb:** Aplicación del método de interpretabilidad Grad-CAM sobre el escenario comparativo de male vs female en la sesión 3.
 4. **GradCAM++.ipynb:** Aplicación del método de interpretabilidad Grad-CAM++ sobre el escenario comparativo de male vs female en la sesión 3.
-5. **My_Data_Generator:** Código para la carga de datos.
+5. **my_data_generator:** Código para la carga de datos.
 6. **BLvsW1W7:** Comparativa adicional del escenario de CPH Female BL vs W1W7.
 7. **my_data_generator1:** Código para la carga de datos, considerando el escenario complementario BL vs W1W7.
+
