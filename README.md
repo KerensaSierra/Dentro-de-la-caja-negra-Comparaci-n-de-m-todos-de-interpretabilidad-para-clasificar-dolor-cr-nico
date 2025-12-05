@@ -1,2 +1,2 @@
-# Dentro-de-la-caja-negra-Comparaci-n-de-m-todos-de-interpretabilidad-para-clasificar-dolor-cr-nico
+# Dentro de la caja negra-Comparación de métodos de interpretabilidad para clasificar dolor crónico
 Este trabajo clasifica estados de dolor crónico en fMRI de rata mediante una red VGG16 3D e integra Grad-CAM, Grad-CAM++, Respond-CAM y HiResCAM para analizar regiones relevantes. Se incorpora la métrica coverage para validar activaciones y se comparan el rendimiento y la estabilidad de los métodos de interpretabilidad.
