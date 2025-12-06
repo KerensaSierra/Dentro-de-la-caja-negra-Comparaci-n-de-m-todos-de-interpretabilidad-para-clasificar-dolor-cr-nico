@@ -59,7 +59,7 @@ class FILES_and_LABELS():
         elif sess == 'ses-02':
             label = 1
         elif sess == 'ses-03':
-            label = 2   
+            label = 2  
         return label
         
     def get_ID_filenames(self):
@@ -67,7 +67,7 @@ class FILES_and_LABELS():
         #FMRI_type -> func o anat
         files = []
         label_files = []
-        rootpath = "C:/Users/L03117947/OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey/rabies"
+        rootpath = "C:/Users/l03087364/OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey/rabies"
         
         #label_table = pd.read_table(rootpath + '/participants.tsv', encoding='utf-8')
         for subj in self.subjects:
@@ -82,7 +82,6 @@ class FILES_and_LABELS():
                     label_files.append(label)
     
         return files, label_files
-    
     def get_mask_and_bold(self):
         files = []
         print("holaaaa, se metio al mask and bold")
@@ -90,6 +89,7 @@ class FILES_and_LABELS():
         if self.functional_type == "rest":
             print("SE METIO AL REST")
             if os.getlogin() == "damia":
+                print("SE METIO AL damia")
                 for i in self.sessions:
                     for j in self.sub:
                         if j <= 68:
@@ -104,7 +104,7 @@ class FILES_and_LABELS():
                             mask =  "E:/preprocess_batch-002_rest/bold_datasink/commonspace_mask/_scan_info_subject_id"+str.zfill(str(j), 3)+".session"+str.zfill(str(i), 2)+"_split_name_sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_desc-o_T2w/_run_None/sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_task-rest_desc-oa_bold_autobox_EPI_brain_mask.nii.gz"
                             image = "E:/preprocess_batch-002_rest/bold_datasink/commonspace_bold/_scan_info_subject_id"+str.zfill(str(j), 3)+".session"+str.zfill(str(i), 2)+"_split_name_sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_desc-o_T2w/_run_None/sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_task-rest_desc-oa_bold_autobox_combined.nii.gz"
                             files.append([image,mask])
-            elif os.getlogin() == "L03117947":
+            else:
                 print("SE METIO AL LOGIN")
                 for i in self.sessions:
                     for j in self.sub:
@@ -141,7 +141,7 @@ class FILES_and_LABELS():
                             mask =  "E:/preprocess_batch-002_rest/bold_datasink/commonspace_mask/_scan_info_subject_id"+str.zfill(str(j), 3)+".session"+str.zfill(str(i), 2)+"_split_name_sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_desc-o_T2w/_run_None/sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_task-rest_desc-oa_bold_autobox_EPI_brain_mask.nii.gz"
                             image = "E:/preprocess_batch-002/commonspace_bold/_scan_info_subject_id"+str.zfill(str(j), 3)+".session"+str.zfill(str(i), 2)+"_split_name_sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_desc-o_T2w/_run_None/sub-"+str.zfill(str(j), 3)+"_ses-"+str.zfill(str(i), 2)+"_task-dist_desc-oa_bold_autobox_combined.nii.gz"
                             files.append([image,mask])
-            elif os.getlogin() == "L03117947":
+            else:
                 print("SE METIO AL LOGIN")
                 print("sesions: ", self.sessions)
                 for i in self.sessions:
@@ -265,19 +265,6 @@ class CustomDataGen(tf.keras.utils.Sequence):
             c1=[]
             
             if self.format == "just_brain" or self.format=="just_brain_M2D" or self.format=="just_brain_vol":
-                if self.classes == "CPHvsNAIVEfemale":
-                    for i in range(len(self.df)):
-                        for j in CPHfemale:
-                            if j in self.df[i][0]:
-                                if 'ses-02' in self.df[i][0] or 'ses-03' in self.df[i][0]:
-                                    c1.append(self.df[i])
-                                else:
-                                    c0.append(self.df[i])
-                        
-                        for k in NAIVEfemale:
-                            if k in self.df[i][0]:
-                                c0.append(self.df[i])
-                                
                 if self.classes == "CPHvsNAIVEmale":
                     for i in range(len(self.df)):
                         for j in CPHmale:
@@ -290,6 +277,16 @@ class CustomDataGen(tf.keras.utils.Sequence):
                         for k in NAIVEmale:
                             if k in self.df[i][0]:
                                 c0.append(self.df[i])
+                
+                            
+                if self.classes == "CPHfemale_BLvsW1W7":
+                    for i in range(len(self.df)):
+                        for j in CPHfemale:
+                            if j in self.df[i][0]:
+                                if 'ses-01' in self.df[i][0]:
+                                    c1.append(self.df[i])
+                                else:
+                                    c0.append(self.df[i])
                                 
                 if self.classes == "sex":
                     for i in range(len(self.df)):
@@ -728,7 +725,6 @@ class CustomDataGen(tf.keras.utils.Sequence):
                 for j in female:
                     if j in file[0]:
                         label.append(1)
-                 
             else:
                 for i in male:
                     if i in file:
@@ -736,7 +732,17 @@ class CustomDataGen(tf.keras.utils.Sequence):
                 for j in female:
                     if j in file:
                         label.append(1)
-        
+        if self.classes == "CPHfemale_BLvsW1W7":
+            if self.format in ["just_brain", "just_brain_M2D", "just_brain_vol"]:
+                for fem in CPHfemale + NAIVEfemale:
+                    if fem in file[0]:
+                        if 'ses-01' in file[0]:
+                            label.append(0)
+                        elif 'ses-02' in file[0] or 'ses-03' in file[0]:
+                            label.append(1)
+                        break
+                if len(label) == 0:
+                    raise ValueError(f"Conflict with labels: {file[0]}")
         if self.classes == "W1vsW7":
             if self.format == "just_brain":
                 if 'ses-02' in file[0]:
@@ -787,11 +793,14 @@ class CustomDataGen(tf.keras.utils.Sequence):
         y_batch_flat = []
         for y in path_batch:
             y_batch_flat.extend(self.__get_output(y))  # ahora devuelve listas planas
-        y_batch = tf.keras.utils.to_categorical(y_batch_flat, num_classes=self.num_class)
+        #y_batch = tf.keras.utils.to_categorical(y_batch_flat, num_classes=self.num_class)
+        y_batch = np.array(y_batch_flat)
         print("Forma final de y_batch:", y_batch.shape)
 
         # --- Generar entradas ---
-        X_batch = np.asarray([self.__get_input(x) for x in path_batch])
+        #X_batch = np.asarray([self.__get_input(x) for x in path_batch])
+        inputs = [self.__get_input(x) for x in path_batch]
+        X_batch = np.stack(inputs, axis=0)
 
         # Dar forma según formato de entrada
         if self.format == "just_brain":
@@ -1322,18 +1331,14 @@ class CustomBatchSampler(Sampler):
                     if k in self.df[i][0]:
                         c0.append(self.df[i])
                         
-        if self.classes == "CPHvsNAIVEmale":
+        if self.classes == "CPHfemale_BLvsW1W7":
             for i in range(len(self.df)):
-                for j in self.CPHmale:
+                for j in self.CPHfemale:
                     if j in self.df[i][0]:
-                        if 'ses-02' in self.df[i][0] or 'ses-03' in self.df[i][0]: 
+                        if 'ses-01' in self.df[i][0]:
                             c1.append(self.df[i])
                         else:
                             c0.append(self.df[i])
-                
-                for k in self.NAIVEmale:
-                    if k in self.df[i][0]:
-                        c0.append(self.df[i])
                         
         if self.classes == "sex":
             for i in range(len(self.df)):
@@ -1423,11 +1428,10 @@ class fMRIDataset_torch(Dataset):
         CPHmale = ['sub-057','sub-059','sub-060','sub-073','sub-074','sub-093','sub-094','sub-095','sub-096','sub-098','sub-099',
                    'sub-100']
         NAIVEmale = ['sub-024','sub-028','sub-075','sub-076']
-        
+        print("configurado")
         label = []
-        if self.classes == "CPHvsNAIVEfemale":
+        if self.classes == "CPHfemale_BLvsW1W7":
             if self.format == "just_brain":
-                
                 for j in NAIVEfemale:
                     if j in self.data[idx][0]:
                         label.append(0)
@@ -1440,8 +1444,26 @@ class fMRIDataset_torch(Dataset):
                             label.append(0)
                 if len(label) == 0:
                     raise ValueError(f"Subject generates conflict with labels: {self.data[idx][0]}")
-                    
         label = label*self.vols
+        
+
+        #if self.classes == "CPHvsNAIVEfemale":
+            #if self.format == "just_brain":
+                
+                #for j in NAIVEfemale:
+                    #if j in self.data[idx][0]:
+                        #label.append(0)
+                        
+                #for i in CPHfemale:
+                    #if i in self.data[idx][0]:
+                        #if 'ses-02' in self.data[idx][0] or 'ses-03' in self.data[idx][0]:
+                            #label.append(1)
+                        #else:
+                            #label.append(0)
+                #if len(label) == 0:
+                    #raise ValueError(f"Subject generates conflict with labels: {self.data[idx][0]}")
+                    
+        #label = label*self.vols
         
         # Retrieve all volumes for a specific session and its label
         return torch.tensor(image_arr, dtype=torch.float32), label
