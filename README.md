@@ -1,5 +1,5 @@
-# Autora  
-**Kerensa Soery Sierra Trujillo**  
+
+**Trabajo efectuado por: Kerensa Soery Sierra Trujillo**  
 **Contacto:** A01642230@tec.mx  
 **Universidad:** Instituto Tecnológico de Monterrey, Campus Guadalajara  
 
@@ -65,4 +65,5 @@ En la sección de archivos de GitHub, se encuentran los siguientes siete código
 5. **my_data_generator:** Código para la carga de datos.
 6. **BLvsW1W7:** Comparativa adicional del escenario de CPH Female BL vs W1W7.
 7. **my_data_generator1:** Código para la carga de datos, considerando el escenario complementario BL vs W1W7.
+
 
